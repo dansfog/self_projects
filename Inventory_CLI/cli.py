@@ -12,45 +12,43 @@ def print_menu():
     print("help")
     print("exit")
 
-def print_items(records):
-    if not records:
-        print("No items found.")
-    for record in records:
-        print(f"ID: {record['id']}, Name: {record['name']}, Quantity: {record['quantity']}, Price: {record['price']}")
+def print_items(lst):
+    for l in lst:
+        print(f"ID: {l['id']}, Name: {l['name']}, Quantity: {l['quantity']}, Price: {l['price']}")
 
 def handle_command(command_line):
     if command_line.startswith("list"):
-        records = storage.load_inventory(filename)
-        print_items(records)
+        lst = storage.load_inventory(filename)
+        print_items(lst)
         return True
     if command_line.startswith("exit"):
         print("Exiting the program.")
         return False
     if command_line.startswith("add"):
-        parts = command_line.split()
-        inventory.add_item(filename, parts[1], int(parts[2]), float(parts[3]))
-        print(f"Item '{parts[1]}' added successfully.")
+        cls= command_line.split()
+        inventory.add_item(filename, cls[1], int(cls[2]), float(cls[3]))
+        print(f"Item '{cls[1]}' added successfully.")
         return True
     if command_line.startswith("remove"):
-        parts = command_line.split()
-        success = inventory.remove_item(filename, parts[1])
+        cls = command_line.split()
+        success = inventory.remove_item(filename, cls[1])
         if success:
-            print(f"Item '{parts[1]}' removed successfully.")
+            print(f"Item '{cls[1]}' removed successfully.")
         else:
-            print(f"Item '{parts[1]}' not found.")
+            print(f"Item '{cls[1]}' not found.")
         return True
     if command_line.startswith("restock"):
-        parts = command_line.split()
-        inventory.restock_item(filename, parts[1], int(parts[2]))
-        print(f"Item '{parts[1]}' restocked successfully.")
+        cls = command_line.split()
+        inventory.restock_item(filename, cls[1], int(cls[2]))
+        print(f"Item '{cls[1]}' restocked successfully.")
         return True
     if command_line.startswith("value"):
         total = inventory.total_value(filename)
         print(f"Total inventory value: {total}")
         return True
     if command_line.startswith("low"):
-        parts = command_line.split()
-        threshold = int(parts[1]) if len(parts) > 1 else 5
+        cls = command_line.split()
+        threshold = int(cls[1]) if len(cls) > 1 else 5
         low_stock = inventory.low_stock_items(filename, threshold)
         print_items(low_stock)
         return True

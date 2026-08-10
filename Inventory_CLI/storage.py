@@ -10,18 +10,18 @@ def line_to_record(line):
       }
       return dct
 
-def record_to_line(record):
-      result=','.join(str(value) for value in record.values())
+def record_to_line(dct):
+      result=','.join(str(value) for value in dct.values())
       return result
 
 def load_inventory(filename):
-        records=[]
+        lst=[]
         with open(filename,'r') as file:
                 for line in file:
-                    records.append(line_to_record(line.strip()))
-        return records
+                    lst.append(line_to_record(line.strip()))
+        return lst
 
-def save_inventory(filename, records):
+def save_inventory(filename, lst):
         with open(filename, 'w') as file:
-            for record in records:
-                file.write(record_to_line(record) + '\n')
+            for l in lst:
+                file.write(record_to_line(l) + '\n')
